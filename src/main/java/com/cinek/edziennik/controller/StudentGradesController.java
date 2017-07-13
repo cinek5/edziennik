@@ -34,41 +34,6 @@ public class StudentGradesController {
 		return "yourgrades";
 
 	}
-	@RequestMapping("/dbTest") 
-	public String dbTest(Model model) {
-		Student student = new Student();
-		student.setName("Marcin");
-		student.setBirthdate(LocalDate.of(1997, 10, 2));
-		student.setEmail("cinek5@gmail.com");
-		student.setSurname("Krawczyk");
-		student.setUsername("cinek5");
-		student.setPassword("cineczek");
-		
-		Teacher teacher = new Teacher();
-		teacher.setName("Jan");
-		teacher.setBirthdate(LocalDate.of(1990, 11, 13));
-		teacher.setEmail("teacher@gmail.com");
-		teacher.setSurname("Nowak");
-		teacher.setUsername("elson");
-		teacher.setPassword("hehe");
-        
-		Course analiza= new Course();
-		analiza.setName("analiza 2.4A");
-		analiza.getStudents().add(student);
-		analiza.setTeacher(teacher);
-		analiza.setStudentsLimit(10);
-		teacher.getCoursesTaught().add(analiza);
-		student.getCoursesAttended().add(analiza);
-		
-		Grade grade = new Grade(5.0,false,analiza,student);
-		analiza.getGrades().add(grade);
-		student.getGrades().add(grade);
-		
-		userService.insertUser(student);
-		
-		return "test";
-	}
-
 	
 
 }

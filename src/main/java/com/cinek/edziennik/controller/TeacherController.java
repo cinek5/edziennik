@@ -40,24 +40,6 @@ public class TeacherController {
 
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String showRegistrationForm(Model model) {
-		Teacher teacher = new Teacher();
-		model.addAttribute("teacher", teacher);
-
-		return "teacherRegisterForm";
-
-	}
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processForm(@ModelAttribute("teacher") @Valid Teacher teacher, BindingResult result) {
-		if (result.hasErrors()) {
-			// errors when filling form
-			return "teacherRegisterForm";
-		} else {
-			userService.insertUser(teacher);
-			return "redirect:/";
-		}
-	}
+	
 
 }

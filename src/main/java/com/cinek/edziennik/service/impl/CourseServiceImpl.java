@@ -48,7 +48,7 @@ public class CourseServiceImpl implements CourseService {
 	public void setGradeFromCourse(Long studentId, Long courseId, double grade) throws StudentNoSuchCourseException {
 		Student student = (Student) userRepository.findById(studentId);
 		Course course = courseRepository.findById(courseId);
-		if (!student.getCoursesAttended().contains(student))
+		if (!student.getCoursesAttended().contains(course))
 			throw new StudentNoSuchCourseException();
 		Grade ocena = new Grade(grade, false, course, student);
 		ocena.setCourse(course);

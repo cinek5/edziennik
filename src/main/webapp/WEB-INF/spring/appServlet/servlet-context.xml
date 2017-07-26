@@ -12,6 +12,7 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+	<view-controller path="/login" view-name="loginPage" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -26,8 +27,8 @@
 	</beans:bean>
 
 	<context:component-scan base-package="com.cinek.edziennik" />
-
-	<beans:bean class="com.cinek.edziennik.config.JavaConfig" />
+	<!-- Scan the JavaConfig -->
+	<context:component-scan base-package="com.cinek.edziennik.config" />
 	<tx:annotation-driven />
 	<beans:bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -44,7 +45,7 @@
 		<beans:property name="jpaProperties">
 			<beans:props>
 				<beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>
-				
+
 			</beans:props>
 		</beans:property>
 	</beans:bean>
@@ -55,6 +56,10 @@
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.jpa.JpaTransactionManager">
 		<beans:property name="entityManagerFactory" ref="entityManagerFactory" />
-	</beans:bean>
 
+
+	</beans:bean>
+    <beans:bean class="com.cinek.edziennik.config.JavaConfig"/>
+    <beans:bean class="com.cinek.edziennik.config.SecurityConfig"/>
+    
 </beans:beans>

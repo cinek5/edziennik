@@ -1,13 +1,17 @@
 package com.cinek.edziennik.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -15,28 +19,32 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 	@NotEmpty
 	private String username;
 	@NotEmpty
-	@Size(min=5)
+	@Size(min = 5)
 	private String password;
 	@NotEmpty
-	@Size(min=3)
+	@Size(min = 3)
 	private String name;
 	@NotEmpty
 	private String surname;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthdate;
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 	@Email
 	private String email;
-
-	public User() {
+	private boolean enabled;
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="user" )
+	private Set<UserRole> userRole;
+ 	public User() {
 		super();
+		userRole=new HashSet<UserRole>();
 	}
 
 	public String getUsername() {
@@ -137,5 +145,22 @@ public abstract class User {
 			return false;
 		return true;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+	
 
 }

@@ -73,7 +73,7 @@ public class AdminController {
 			// errors when filling form
 			return "studentRegisterForm";
 		} else {
-			userService.insertUser(student);
+			userService.registerNewStudent(student);
 			return "redirect:/";
 		}
 	}
@@ -93,7 +93,7 @@ public class AdminController {
 			// errors when filling form
 			return "teacherRegisterForm";
 		} else {
-			userService.insertUser(teacher);
+			userService.registerNewTeacher(teacher);
 			return "redirect:/";
 		}
 	}

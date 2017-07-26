@@ -15,4 +15,10 @@ public interface UserService {
 
 	User findById(Long id);
 
+	void registerNewTeacher(Teacher teacher);
+	
+	void registerNewStudent(Student student);
+
+
+
 }

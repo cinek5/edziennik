@@ -30,7 +30,7 @@ public class StudentGradesController {
 
 	@RequestMapping("/myGrades")
 	public String showGrades(Model model) {
-		// TODO
+		
 		return "yourgrades";
 
 	}

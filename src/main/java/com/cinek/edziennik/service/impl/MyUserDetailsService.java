@@ -5,7 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.cinek.edziennik.model.UserRole;
 import com.cinek.edziennik.repository.UserRepository;
-@Service("userDetailsService")
+@Service
 public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;

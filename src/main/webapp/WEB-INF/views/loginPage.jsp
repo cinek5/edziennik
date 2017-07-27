@@ -25,7 +25,7 @@
 		<div class="col-md-4">
 
 			<form class="form-group" method="post" action="${loginUrl}">
-				<c:if test="${not empty error}">
+				<c:if test="${error}">
 					<div class="row">
 						<div class="alert alert-danger" role="alert">Wrong username
 							or password. Try again.</div>

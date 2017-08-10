@@ -1,7 +1,5 @@
 package com.cinek.edziennik.config;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -19,35 +17,36 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-	    http.authorizeRequests().antMatchers("/admin/**")
-		.access("hasRole('ROLE_ADMIN')").and().formLogin()
-		.loginPage("/login").failureUrl("/login?error=true")
-		.defaultSuccessUrl("/")
-		.usernameParameter("username")
-		.passwordParameter("password")
-		.and().logout().logoutSuccessUrl("/login?logout")
-		.and().csrf()
-		.and().exceptionHandling().accessDeniedPage("/403");
+		http.authorizeRequests()
+				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+		        .antMatchers("/student/**").access("hasRole('ROLE_STUDENT')")
+	            .antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER')").and()
+		        .formLogin()
+				.loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/")
+				.usernameParameter("username").passwordParameter("password").and().logout()
+				.logoutSuccessUrl("/login?logout").and().csrf().and().exceptionHandling().accessDeniedPage("/403");
+		
+		
 	}
-	
-	
+
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
 	}
-
-
 
 }

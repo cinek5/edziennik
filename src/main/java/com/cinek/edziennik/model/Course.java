@@ -35,6 +35,7 @@ public class Course {
 	private Set<Grade> grades;
 	@Min(10)
 	private Integer studentsLimit;
+	
 
 	public Course() {
 		super();
@@ -119,6 +120,12 @@ public class Course {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	public boolean isFull() {
+		return students.size()>=studentsLimit;
+	}
+	public int getSize() {
+		return students.size();
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.cinek.edziennik.model.UserRole;
 import com.cinek.edziennik.repository.UserRepository;
 @Service
+@Transactional
 public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;

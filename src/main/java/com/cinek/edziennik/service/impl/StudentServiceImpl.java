@@ -1,5 +1,11 @@
 package com.cinek.edziennik.service.impl;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,53 +15,82 @@ import com.cinek.edziennik.model.Grade;
 import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.repository.CourseRepository;
 import com.cinek.edziennik.repository.UserRepository;
+import com.cinek.edziennik.service.CourseService;
 import com.cinek.edziennik.service.StudentService;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	CourseRepository courseRepository;
-    public StudentServiceImpl(UserRepository userRepository, CourseRepository courseRepository) {
-    	this.userRepository=userRepository;
-    	this.courseRepository=courseRepository;
-    	
-    }
+	@Autowired
+	CourseService courseService;
+
+	public StudentServiceImpl(UserRepository userRepository, CourseRepository courseRepository) {
+		this.userRepository = userRepository;
+		this.courseRepository = courseRepository;
+
+	}
+
 	@Override
 	public void acceptGrade(Long studentId, Long gradeId) throws NoSuchGradeException {
 		Student student = (Student) userRepository.findById(studentId);
-        Grade grade = findStudentsGradeById(student,gradeId);
-        if (grade!=null) {
-        grade.setAccepted(true);
-        } else {
-        	throw new NoSuchGradeException();
-        }
-       
-        
+		Grade grade = findGradeById(gradeId);
+		if (grade != null) {
+			grade.setAccepted(true);
+		} else {
+			throw new NoSuchGradeException();
+		}
+
 	}
 
-	private Grade findStudentsGradeById(Student student, Long gradeId) {
-		Grade grade = null;
-		for (Grade g : student.getGrades()) {
-			if (g.getId().equals(gradeId)) {
-				grade = g;
-			}
-		}
+	private Grade findGradeById(Long gradeId) {
+		Grade grade = courseRepository.findGradeById(gradeId);
 		return grade;
 	}
 
 	@Override
 	public double showAverageGrade(Long studentId) {
 		double avg = 0;
-		int sum=0;
+		int sum = 0;
 		Student student = (Student) userRepository.findById(studentId);
-		for (Grade g:student.getGrades()) {
-			sum+=g.getGrade();
+		for (Grade g : student.getGrades()) {
+			sum += g.getGrade();
 		}
-		avg = sum/student.getGrades().size();
+		avg = sum / student.getGrades().size();
 		return avg;
+	}
+
+	@Override
+	public Set<Grade> getStudentGradesByUsername(String username) {
+		Student student = (Student) userRepository.findByUsername(username);
+		Set<Grade> grades = student.getGrades();
+		Hibernate.initialize(grades);
+		return grades;
+	}
+
+	@Override
+	public Set<Course> getCoursesAvaibleToSingIn(String username) {
+		Set<Course> avaibleCourses = courseService.getAllCoursesAvaible();
+		Student student = (Student) userRepository.findByUsername(username);
+		List<Course> coursesAttended = student.getCoursesAttended();
+		avaibleCourses.removeAll(coursesAttended);
+		return avaibleCourses;
+	}
+
+	@Override
+	public Grade findStudentsGradeById(Long studentId, Long courseId) {
+		Grade grade = null;
+		try {
+		    grade = courseRepository.findStudentsGradeById(studentId, courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return grade;
 	}
 
 }

@@ -6,6 +6,9 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +54,20 @@ public class HomeController {
 
 		return model;
 
+	}
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	public String check(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		boolean loggedIn=false;
+		model.addAttribute("logged", loggedIn);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		for (GrantedAuthority ga : user.getAuthorities()) {
+			logger.info("user authority: "+ga.getAuthority());
+		}
+		
+		
+		return "home";
 	}
 	
 }

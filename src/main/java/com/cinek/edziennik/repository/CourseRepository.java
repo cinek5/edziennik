@@ -10,5 +10,9 @@ public interface CourseRepository {
 	void insertCourse(Course course);
 	void insertGrade(Grade grade);
 	List<Course> findCourseByNameQuery(String query);
+	List<Course> findAllCourses();
+	Grade findGradeById(Long gradeId);
+	Grade findStudentsGradeById(Long studentsId,Long courseId);
+	
 	
 }

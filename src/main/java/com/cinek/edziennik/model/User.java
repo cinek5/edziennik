@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public abstract class User {
 	private String email;
 	private boolean enabled;
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="user" )
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="user",cascade = CascadeType.ALL )
 	private Set<UserRole> userRole;
  	public User() {
 		super();

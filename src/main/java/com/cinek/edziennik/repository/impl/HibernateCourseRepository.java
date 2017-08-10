@@ -5,17 +5,26 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cinek.edziennik.model.Course;
 import com.cinek.edziennik.model.Grade;
+import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.repository.CourseRepository;
 @Repository
 public class HibernateCourseRepository implements CourseRepository {
 	@PersistenceContext
 	EntityManager entityManager;
+	
+	
 
 	@Override
 	@Transactional
@@ -46,4 +55,32 @@ public class HibernateCourseRepository implements CourseRepository {
 		return course;
 	}
 
+	@Override
+	@Transactional
+	public List<Course> findAllCourses() {
+		List<Course> results = entityManager
+                .createQuery("Select course from Course course", Course.class)
+                .getResultList();
+		return results;
+	}
+
+	@Override
+	public Grade findGradeById(Long gradeId) {
+		Grade grade = entityManager.find(Grade.class, gradeId);
+		return grade;
+	}
+
+	@Override
+	public Grade findStudentsGradeById(Long studentId, Long courseId) {
+		TypedQuery<Grade> query = entityManager
+				.createQuery("Select g from Grade g where g.student.id=:sId and g.course.id=:cId", Grade.class);
+		query.setParameter("sId", studentId);
+		query.setParameter("cId",courseId);
+		Grade grade = query.getSingleResult();
+				
+		
+		return grade;
+	}
+
+	
 }

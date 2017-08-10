@@ -70,11 +70,11 @@
                 <th>Status</th>
             </thead>
             <tbody>
-            	<c:forEach var="entry" items="${grades}">
+            	<c:forEach var="gradeObject" items="${grades}">
  					 <tr> 
- 					 	<td>${entry.key.name}</td>
- 					 	<td>${entry.key.teacher.name} ${entry.key.teacher.surname}</td>
- 					 	<td>${entry.value.grade}</td>
+ 					 	<td>${gradeObject.course.name}</td>
+ 					 	<td>${gradeObject.course.teacher.name} ${gradeObject.course.teacher.surname}</td>
+ 					 	<td>${gradeObject.grade}</td>
  					 	<td>Zaakceptowano</td>
  					 </tr>
 				</c:forEach>

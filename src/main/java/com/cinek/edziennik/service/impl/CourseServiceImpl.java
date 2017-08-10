@@ -1,7 +1,13 @@
 package com.cinek.edziennik.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +17,6 @@ import com.cinek.edziennik.model.Course;
 import com.cinek.edziennik.model.Grade;
 import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.model.Teacher;
-import com.cinek.edziennik.model.User;
 import com.cinek.edziennik.repository.CourseRepository;
 import com.cinek.edziennik.repository.UserRepository;
 import com.cinek.edziennik.service.CourseService;
@@ -61,20 +66,36 @@ public class CourseServiceImpl implements CourseService {
 	@Transactional
 	public List<Course> getCoursesStudentAttends(String username) {
 		Student student = (Student) userRepository.findByUsername(username);
-		return student.getCoursesAttended();
+        List<Course>  courses = student.getCoursesAttended();
+        Hibernate.initialize(courses);
+		return courses;
 	}
 
 	@Override
 	@Transactional
-	public List<Course> getCoursesTeacherTeaches(String username) {
+	public Map<Course,Integer> getCoursesTeacherTeachesWithSize(String username) {
 		Teacher teacher = (Teacher) userRepository.findByUsername(username);
-		return teacher.getCoursesTaught();
+		List<Course> courses =teacher.getCoursesTaught();
+		Map<Course,Integer> map = new HashMap<Course,Integer>();
+		for (Course c: courses) {
+			map.put(c, c.getSize());
+		}
+		
+		return  map;
 	}
 
 	@Override
 	@Transactional
-	public void getAllCoursesAvaible() {
-		// TODO
+	public Set<Course> getAllCoursesAvaible() {
+	   List<Course> allCourses = courseRepository.findAllCourses();
+	   Set<Course> avaibleCourses = new HashSet<Course>();
+	   for (Course c : allCourses) {
+		   if (!c.isFull()) {
+			   avaibleCourses.add(c);
+		   }
+	   }
+	   
+	   return avaibleCourses;
 
 	}
 
@@ -89,6 +110,15 @@ public class CourseServiceImpl implements CourseService {
 	@Transactional
 	public void insertCourse(Course course) {
 		courseRepository.insertCourse(course);
+	}
+
+	@Override
+	@Transactional
+	public List<Student> getStudentsAttendingCourse(Long courseId) {
+		Course course = courseRepository.findById(courseId);
+		List<Student> students = course.getStudents();
+		Hibernate.initialize(students);
+		return students;
 	}
 
 }

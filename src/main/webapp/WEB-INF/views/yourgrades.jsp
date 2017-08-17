@@ -68,6 +68,7 @@
                 <th>Teacher</th>
                 <th>Grade</th>
                 <th>Status</th>
+                <th></th>
             </thead>
             <tbody>
             	<c:forEach var="gradeObject" items="${grades}">
@@ -75,7 +76,12 @@
  					 	<td>${gradeObject.course.name}</td>
  					 	<td>${gradeObject.course.teacher.name} ${gradeObject.course.teacher.surname}</td>
  					 	<td>${gradeObject.grade}</td>
- 					 	<td>Zaakceptowano</td>
+ 					 	<td>${gradeObject.accepted}</td>
+ 					 	<td>	
+ 					 		<c:if test="${not gradeObject.accepted }">
+ 					 	<a href="<c:url value ="/student/acceptGrade/${gradeObject.id }"/>" class="btn btn-info togglebutton" type="button">Accept grade</a> 
+ 					 		</c:if>
+ 					 	</td>
  					 </tr>
 				</c:forEach>
               

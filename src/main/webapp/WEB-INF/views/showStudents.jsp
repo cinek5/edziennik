@@ -42,7 +42,7 @@
 			var grade = $(selectId).val();
 			url += grade;
 			$.get(url);
-			location.reload(true);
+			location.reload();
 		});
 	});
 </script>

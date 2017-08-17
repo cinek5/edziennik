@@ -33,9 +33,9 @@ public class TeacherController {
 	@Autowired
 	StudentService studentService;
 
-	@RequestMapping(value = "/setGrade/{courseId}/{studentId}/{grade}", method = RequestMethod.GET)
+	@RequestMapping(value = "/setGrade/{courseId}/{studentId}/{grade:.+}", method = RequestMethod.GET)
 	public String setGrade(Model model, @PathVariable Long studentId, @PathVariable Long courseId,
-			@PathVariable Double grade) {
+			@PathVariable double grade) {
 		try {
 			courseService.setGradeFromCourse(studentId, courseId, grade);
 		} catch (StudentNoSuchCourseException e) {
@@ -76,10 +76,8 @@ public class TeacherController {
 			Grade grade = studentService.findStudentsGradeById(studentId, courseId);
 			if (grade != null) {
 				map.put(student,  String.valueOf(grade.getGrade()));
-				System.out.println(grade.getGrade());
 			} else {
 				map.put(student, "---");
-				System.out.println("nie ma oceny");
 			}
 
 		}

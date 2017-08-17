@@ -50,16 +50,30 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional
+	/**
+	 * Sets students grade from course. If students already has grade from this course, it
+	 * changes the double value of the grade. Otherwise, it creates the new Grade and adds it
+	 * to Database;
+	 * @param studentId - id of student
+	 * @param courseId - id of course
+	 * @param grade - double value of the grade eg.(4.5,5.0, etc)
+	 *
+	 */
 	public void setGradeFromCourse(Long studentId, Long courseId, double grade) throws StudentNoSuchCourseException {
 		Student student = (Student) userRepository.findById(studentId);
 		Course course = courseRepository.findById(courseId);
 		if (!student.getCoursesAttended().contains(course))
 			throw new StudentNoSuchCourseException();
-		Grade ocena = new Grade(grade, false, course, student);
-		ocena.setCourse(course);
-		ocena.setStudent(student);
-		student.getGrades().add(ocena);
-		course.getGrades().add(ocena);
+		Grade ocena = courseRepository.findStudentsGradeById(studentId, courseId);
+		if (ocena==null) {
+			ocena = new Grade(grade, false, course, student);
+		    ocena.setCourse(course);
+		    ocena.setStudent(student);
+		    student.getGrades().add(ocena);
+		    course.getGrades().add(ocena);
+		} else {
+			ocena.setGrade(grade);
+		}
 	}
 
 	@Override

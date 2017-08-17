@@ -56,9 +56,9 @@
         </div>
 
         <!--right align-->
-        <c:if test="${logged}">
+        <c:if test="${not empty pageContext.request.userPrincipal}" >
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Logout <span class="glyphicon glyphicon-remove"></span></a></li>
+            <li><a href="<c:url value= "/login?logout"/>">Logout <span class="glyphicon glyphicon-remove"></span></a></li>
         </ul>
 		</c:if>
     </div>
@@ -73,7 +73,7 @@
     <div class="jumbotron">
         <h1 class="showable">Welcome w E-Notes!</h1>
         <p class="showable" title="Register if you don't have an account" id="#p1">Please log in to continue.</p>
-        <p class="showable"><a class="btn btn-primary btn-lg" href="#" role="button">Log in</a></p>
+        <p class="showable"><a class="btn btn-primary btn-lg" href="<c:url value="/login" />" role="button">Log in</a></p>
     </div>
 
 

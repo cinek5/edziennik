@@ -8,7 +8,7 @@ import com.cinek.edziennik.model.Grade;
 import com.cinek.edziennik.model.Student;
 
 public interface StudentService {
-	void acceptGrade(Long studentId,Long gradeId) throws NoSuchGradeException;
+	void acceptGrade(Long gradeId) throws NoSuchGradeException;
 	double showAverageGrade(Long studentId);
 	Set<Grade> getStudentGradesByUsername(String username);
 	Set<Course> getCoursesAvaibleToSingIn(String username);

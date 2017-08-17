@@ -36,8 +36,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void acceptGrade(Long studentId, Long gradeId) throws NoSuchGradeException {
-		Student student = (Student) userRepository.findById(studentId);
+	public void acceptGrade(Long gradeId) throws NoSuchGradeException {
 		Grade grade = findGradeById(gradeId);
 		if (grade != null) {
 			grade.setAccepted(true);

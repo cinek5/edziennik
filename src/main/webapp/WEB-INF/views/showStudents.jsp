@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,24 +27,30 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
 <script>
-	$(document).ready(function() {
-		$(".hideable").hide();
+	$(document)
+			.ready(
+					function() {
+						$(".hideable").hide();
 
-		$(".togglebutton").click(function() {
-			$("#" + $(this).data('id')).toggle();
-		});
+						$(".togglebutton").click(function() {
+							$("#" + $(this).data('id')).toggle();
+						});
 
-		$(".submitbutton").click(function() {
-			var url = "${pageContext.request.contextPath}/teacher/setGrade/${courseId}/"
-			var studentId = $(this).attr("studentId");
-			url += studentId + "/";
-			var selectId = "#" + $(this).data('id');
-			var grade = $(selectId).val();
-			url += grade;
-			$.get(url);
-			location.reload();
-		});
-	});
+						$(".submitbutton")
+								.click(
+										function() {
+											var url = "${pageContext.request.contextPath}/teacher/setGrade/${courseId}/"
+											var studentId = $(this).attr(
+													"studentId");
+											url += studentId + "/";
+											var selectId = "#"
+													+ $(this).data('id');
+											var grade = $(selectId).val();
+											url += grade;
+											$.get(url);
+											location.reload();
+										});
+					});
 </script>
 
 </head>
@@ -106,11 +112,26 @@
 					<tr>
 						<td>${entry.key.name}</td>
 						<td>${entry.key.surname}</td>
-						<td>${entry.value }</td>
-						<td>
+						<td><c:if test="${empty entry.value.grade }">
+							--
+						</c:if> <c:if test="${not empty entry.value.grade }">
+						${entry.value.grade}
+															
+							</c:if></td>
+						<td><c:if test="${not entry.value.accepted }">
+								<script>
+									$(document)
+											.ready(
+													function() {
+														var button = document
+																.getElementById("button${theCount.count}");
+														button.disabled = true;
+													});
+								</script>
+							</c:if>
 							<button class="btn btn-info togglebutton" type="button"
-								data-id="${theCount.count}">Set grade</button>
-						</td>
+								id="button${theCount.count}" data-id="${theCount.count}">Set
+								grade</button></td>
 					</tr>
 					<tr class="hideable" id="${theCount.count}">
 						<td colspan=3>
@@ -132,7 +153,8 @@
 									</div>
 									<div class="col-md-4">
 										<button class="btn btn-info submitbutton"
-											studentId="${entry.key.id }" type="button" data-id="select${theCount.count}">Submit</button>
+											studentId="${entry.key.id }" type="button"
+											data-id="select${theCount.count}">Submit</button>
 									</div>
 								</div>
 

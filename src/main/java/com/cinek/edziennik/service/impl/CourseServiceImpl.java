@@ -51,12 +51,16 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	@Transactional
 	/**
-	 * Sets students grade from course. If students already has grade from this course, it
-	 * changes the double value of the grade. Otherwise, it creates the new Grade and adds it
-	 * to Database;
-	 * @param studentId - id of student
-	 * @param courseId - id of course
-	 * @param grade - double value of the grade eg.(4.5,5.0, etc)
+	 * Sets students grade from course. If students already has grade from this
+	 * course, it changes the double value of the grade. Otherwise, it creates
+	 * the new Grade and adds it to Database;
+	 * 
+	 * @param studentId
+	 *            - id of student
+	 * @param courseId
+	 *            - id of course
+	 * @param grade
+	 *            - double value of the grade eg.(4.5,5.0, etc)
 	 *
 	 */
 	public void setGradeFromCourse(Long studentId, Long courseId, double grade) throws StudentNoSuchCourseException {
@@ -65,13 +69,15 @@ public class CourseServiceImpl implements CourseService {
 		if (!student.getCoursesAttended().contains(course))
 			throw new StudentNoSuchCourseException();
 		Grade ocena = courseRepository.findStudentsGradeById(studentId, courseId);
-		if (ocena==null) {
+		if (ocena == null) {
 			ocena = new Grade(grade, false, course, student);
-		    ocena.setCourse(course);
-		    ocena.setStudent(student);
-		    student.getGrades().add(ocena);
-		    course.getGrades().add(ocena);
-		} else {
+			ocena.setCourse(course);
+			ocena.setStudent(student);
+			student.getGrades().add(ocena);
+			course.getGrades().add(ocena);
+		}
+		// accepted grade can't be changed
+		else if (!ocena.isAccepted()) {
 			ocena.setGrade(grade);
 		}
 	}
@@ -80,36 +86,36 @@ public class CourseServiceImpl implements CourseService {
 	@Transactional
 	public List<Course> getCoursesStudentAttends(String username) {
 		Student student = (Student) userRepository.findByUsername(username);
-        List<Course>  courses = student.getCoursesAttended();
-        Hibernate.initialize(courses);
+		List<Course> courses = student.getCoursesAttended();
+		Hibernate.initialize(courses);
 		return courses;
 	}
 
 	@Override
 	@Transactional
-	public Map<Course,Integer> getCoursesTeacherTeachesWithSize(String username) {
+	public Map<Course, Integer> getCoursesTeacherTeachesWithSize(String username) {
 		Teacher teacher = (Teacher) userRepository.findByUsername(username);
-		List<Course> courses =teacher.getCoursesTaught();
-		Map<Course,Integer> map = new HashMap<Course,Integer>();
-		for (Course c: courses) {
+		List<Course> courses = teacher.getCoursesTaught();
+		Map<Course, Integer> map = new HashMap<Course, Integer>();
+		for (Course c : courses) {
 			map.put(c, c.getSize());
 		}
-		
-		return  map;
+
+		return map;
 	}
 
 	@Override
 	@Transactional
 	public Set<Course> getAllCoursesAvaible() {
-	   List<Course> allCourses = courseRepository.findAllCourses();
-	   Set<Course> avaibleCourses = new HashSet<Course>();
-	   for (Course c : allCourses) {
-		   if (!c.isFull()) {
-			   avaibleCourses.add(c);
-		   }
-	   }
-	   
-	   return avaibleCourses;
+		List<Course> allCourses = courseRepository.findAllCourses();
+		Set<Course> avaibleCourses = new HashSet<Course>();
+		for (Course c : allCourses) {
+			if (!c.isFull()) {
+				avaibleCourses.add(c);
+			}
+		}
+
+		return avaibleCourses;
 
 	}
 

@@ -64,20 +64,20 @@ public class TeacherController {
 		// TODO zrób mapê która robi pare (student,ocena z kursu zeby bylo
 		// latwiej to wyswietlic,
 		// jak nie ma oceny to zmapuj null)
-		Map<Student, String> studentGradeMap = makeMap(students, courseId);
+		Map<Student, Grade> studentGradeMap = makeMap(students, courseId);
 		model.addAttribute("studentsMap", studentGradeMap);
 		return "showStudents";
 	}
 
-	private Map<Student, String> makeMap(List<Student> students, Long courseId) {
-		Map<Student, String> map = new HashMap<Student, String>();
+	private Map<Student, Grade> makeMap(List<Student> students, Long courseId) {
+		Map<Student, Grade> map = new HashMap<Student, Grade>();
 		for (Student student : students) {
 			Long studentId = student.getId();
 			Grade grade = studentService.findStudentsGradeById(studentId, courseId);
 			if (grade != null) {
-				map.put(student,  String.valueOf(grade.getGrade()));
+				map.put(student,  grade);
 			} else {
-				map.put(student, "---");
+				map.put(student, null);
 			}
 
 		}

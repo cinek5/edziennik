@@ -76,7 +76,14 @@
  					 	<td>${gradeObject.course.name}</td>
  					 	<td>${gradeObject.course.teacher.name} ${gradeObject.course.teacher.surname}</td>
  					 	<td>${gradeObject.grade}</td>
- 					 	<td>${gradeObject.accepted}</td>
+ 					 	<td>
+ 					 		<c:if test="${gradeObject.accepted }"> 
+ 	                        Accepted
+ 					 		</c:if>
+ 					 		<c:if test="${not gradeObject.accepted }"> 
+ 	                        Not accepted yet
+ 					 		</c:if>
+ 					 	</td>
  					 	<td>	
  					 		<c:if test="${not gradeObject.accepted }">
  					 	<a href="<c:url value ="/student/acceptGrade/${gradeObject.id }"/>" class="btn btn-info togglebutton" type="button">Accept grade</a> 

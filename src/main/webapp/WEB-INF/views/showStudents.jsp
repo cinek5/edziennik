@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +53,10 @@
 											location.reload();
 										});
 					});
+	function disableElement(id) {
+		var button = document.getElementById(id);
+		button.disabled = true;
+	}
 </script>
 
 </head>
@@ -63,7 +69,7 @@
 			<div class="navbar-header">
 
 				<div class="navbar-brand ">
-					<span class="glyphicon glyphicon-home"></span> E-Dziennik
+					<span class="glyphicon glyphicon-home"></span> E-Notes
 				</div>
 			</div>
 
@@ -72,26 +78,45 @@
 			<div>
 
 				<ul class="nav navbar-nav">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Kursy</a></li>
-					<li><a href="#">About</a></li>
+					<li class="active"><a href="<c:url value="/" />">Home</a></li>
+					<li><a href="<c:url value="/about" />">About</a></li>
+
 
 					<!--dropDown-->
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">My Nigga <span class="caret"></span></a>
+						data-toggle="dropdown">Menu <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li>kutas</li>
-							<li>dupa</li>
+							<sec:authorize access="hasRole('STUDENT')">
+								<li><a href="<c:url value="/student/signIn" />">Sing up
+										for courses</a></li>
+								<li><a href="<c:url value="/student/myGrades" />">Show
+										my course grades</a></li>
+							</sec:authorize>
+							<sec:authorize access="hasRole('TEACHER')">
+								<li><a href="<c:url value="/teacher/showCourses" />">Show
+										courses </a></li>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ADMIN')">
+								<li><a href="<c:url value="/admin/addCourse" />">Add
+										new course </a></li>
+								<li><a href="<c:url value="/admin/registerStudent" />">Register
+										new student </a></li>
+								<li><a href="<c:url value="/admin/registerTeacher" />">Register
+										new teacher </a></li>
+
+							</sec:authorize>
+
 						</ul></li>
 				</ul>
 			</div>
 
 			<!--right align-->
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Logout <span
-						class="glyphicon glyphicon-remove"></span></a></li>
-			</ul>
-
+			<c:if test="${not empty pageContext.request.userPrincipal}">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="<c:url value= "/login?logout"/>">Logout <span
+							class="glyphicon glyphicon-remove"></span></a></li>
+				</ul>
+			</c:if>
 		</div>
 	</nav>
 
@@ -103,9 +128,9 @@
 		<h2>Students list</h2>
 		<table class="table">
 			<thead>
-				<th>Imie</th>
-				<th>Nazwisko</th>
-				<th>Ocena</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Grade</th>
 			</thead>
 			<tbody>
 				<c:forEach var="entry" items="${studentsMap}" varStatus="theCount">
@@ -118,14 +143,12 @@
 						${entry.value.grade}
 															
 							</c:if></td>
-						<td><c:if test="${not entry.value.accepted }">
+						<td><c:if test="${entry.value.accepted }">
 								<script>
 									$(document)
 											.ready(
 													function() {
-														var button = document
-																.getElementById("button${theCount.count}");
-														button.disabled = true;
+														disableElement("button${theCount.count}");
 													});
 								</script>
 							</c:if>

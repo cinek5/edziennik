@@ -43,6 +43,7 @@ public class StudentGradesController {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		Set<Course> courses = studentService.getCoursesAvaibleToSingIn(username);
+		if (courses.isEmpty()) model.addAttribute("noCourses",true);
 		model.addAttribute("courses", courses);
 		return "studentCoursesAvaible";
 	}

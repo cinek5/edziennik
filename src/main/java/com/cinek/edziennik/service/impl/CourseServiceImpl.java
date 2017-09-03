@@ -77,7 +77,7 @@ public class CourseServiceImpl implements CourseService {
 			course.getGrades().add(ocena);
 		}
 		// accepted grade can't be changed
-		else if (!ocena.isAccepted()) {
+		else if (!ocena.isAccepted()){
 			ocena.setGrade(grade);
 		}
 	}

@@ -52,6 +52,12 @@
 											$.get(url);
 											location.reload();
 										});
+						$("#searchButton").click(function() {
+							 var searchText = $("#searchBar").val();
+							  var startingPath = "${pageContext.request.contextPath}/teacher/showStudents/${courseId }/";
+							  $("#searchButton").attr("href",startingPath+searchText);
+						});
+						
 					});
 	function disableElement(id) {
 		var button = document.getElementById(id);
@@ -126,6 +132,15 @@
 
 	<div class="container">
 		<h2>Students list</h2>
+		
+			<div class="input-group" style="width: 25%;">
+	  		<input type="text" placeholder="Type surname here" id="searchBar" class="form-control" >
+	  		
+			  		<div class="input-group-btn">
+			   		<a id="searchButton" href="<c:url value="/teacher/showStudents/${courseId }/" />" type="button" class="btn btn-default">Search</a>
+			  		</div>
+			</div>
+		
 		<table class="table">
 			<thead>
 				<th>Name</th>

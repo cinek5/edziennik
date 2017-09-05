@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public abstract class User implements Comparable<User> {
 	@NotEmpty
 	private String username;
 	@NotEmpty
@@ -161,6 +161,12 @@ public abstract class User {
 
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
+	}
+	@Override 
+	public int compareTo(User otherUser) {
+		return this.surname.compareTo(otherUser.surname)==0? this.name.compareTo(otherUser.name) : this.surname.compareTo(otherUser.surname);
+		
+		
 	}
 	
 

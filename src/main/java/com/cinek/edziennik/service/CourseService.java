@@ -20,4 +20,5 @@ public interface CourseService {
 	void insertCourse(Course course);
 	Map<Course, Integer> getCoursesTeacherTeachesWithSize(String username);
 	
+	
 }

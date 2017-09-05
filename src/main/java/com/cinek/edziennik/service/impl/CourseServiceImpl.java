@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -140,5 +142,5 @@ public class CourseServiceImpl implements CourseService {
 		Hibernate.initialize(students);
 		return students;
 	}
-
+	
 }

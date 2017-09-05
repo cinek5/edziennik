@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,27 @@ public class HibernateUserRepository implements UserRepository {
 	public List<Teacher> getAllTeachers() {
 		Query query = entityManager.createQuery("select t from Teacher t");
 		List<Teacher> result = query.getResultList();
+		return result;
+	}
+
+	
+
+	@Override
+	public List<Student> searchStudentBySurname(String surname) {
+		TypedQuery<Student> query = entityManager
+				.createQuery("Select s from Student s  where s.surname like :surname", Student.class);
+		query.setParameter("surname", "%"+surname+"%");
+		List<Student> result = query.getResultList();
+		return result;
+	}
+
+	@Override
+	public List<Student> searchStudentBySurnameAttendingCourse(String surname, Long courseId) {
+		TypedQuery<Student> query = entityManager
+				.createQuery("Select s from Student s join s.coursesAttended course where s.surname like :surname and course.id=:cId", Student.class);
+		query.setParameter("surname", "%"+surname+"%");
+		query.setParameter("cId", courseId);
+		List<Student> result = query.getResultList();
 		return result;
 	}
 

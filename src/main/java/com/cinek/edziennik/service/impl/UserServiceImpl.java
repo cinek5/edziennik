@@ -72,4 +72,16 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public List<Student> searchStudentBySurname(String surname) {
+		
+		return userRepository.searchStudentBySurname(surname);
+	}
+
+	@Override
+	public List<Student> searchStudentBySurnameAttendingCourse(String surname, Long courseId) {
+		
+		return userRepository.searchStudentBySurnameAttendingCourse(surname, courseId);
+	}
+
 }

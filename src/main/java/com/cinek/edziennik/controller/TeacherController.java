@@ -1,8 +1,11 @@
 package com.cinek.edziennik.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -68,9 +71,20 @@ public class TeacherController {
 		model.addAttribute("studentsMap", studentGradeMap);
 		return "showStudents";
 	}
+	@RequestMapping("/showStudents/{courseId}/{surname}")
+	public String searchStudentsAttendingCourse(Model model, @PathVariable Long courseId,@PathVariable String surname) {
+		List<Student> students = userService.searchStudentBySurnameAttendingCourse(surname, courseId);
+		model.addAttribute("courseId", courseId);
+		// TODO zrób mapê która robi pare (student,ocena z kursu zeby bylo
+		// latwiej to wyswietlic,
+		// jak nie ma oceny to zmapuj null)
+		Map<Student, Grade> studentGradeMap = makeMap(students, courseId);
+		model.addAttribute("studentsMap", studentGradeMap);
+		return "showStudents";
+	}
 
-	private Map<Student, Grade> makeMap(List<Student> students, Long courseId) {
-		Map<Student, Grade> map = new HashMap<Student, Grade>();
+	private SortedMap<Student, Grade> makeMap(List<Student> students, Long courseId) {
+		SortedMap<Student, Grade> map = new TreeMap<Student, Grade>();
 		for (Student student : students) {
 			Long studentId = student.getId();
 			Grade grade = studentService.findStudentsGradeById(studentId, courseId);

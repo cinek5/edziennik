@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cinek.edziennik.model.Course;
 import com.cinek.edziennik.model.Grade;
+import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.model.Teacher;
 import com.cinek.edziennik.model.User;
 
@@ -14,6 +15,8 @@ public interface UserRepository {
 	User findById(Long id);
 	void insertUser(User user);
     List<Teacher> getAllTeachers();
+    List<Student> searchStudentBySurname(String surname);
+    List<Student> searchStudentBySurnameAttendingCourse(String surname,Long courseId);
 	
 	
 }

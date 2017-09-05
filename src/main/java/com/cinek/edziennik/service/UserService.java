@@ -18,6 +18,8 @@ public interface UserService {
 	void registerNewTeacher(Teacher teacher);
 	
 	void registerNewStudent(Student student);
+	 List<Student> searchStudentBySurname(String surname);
+	 List<Student> searchStudentBySurnameAttendingCourse(String surname,Long courseId);
 
 
 

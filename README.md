@@ -10,10 +10,10 @@
 
 ## Technologies used:
 - Java
-- jQuery/js
-- HTML/CSS/BOOTSTRAP
+- jQuery/javascript
+- HTML/CSS/Bootstrap
 - mockito/jUnit
-- SPRING MVC
-- HIBERNATE
+- Spring MVC/Spring security 
+- Hibernate
 - MySQL
 - jsp for views

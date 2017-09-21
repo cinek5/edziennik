@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +67,7 @@ public class HibernateUserRepository implements UserRepository {
 	}
 
 	@Override
+	@Transactional
 	/**
 	 * Return list of students attending specific course whose surname is substring of parameter
 	 * @param courseId - id of course
@@ -77,6 +79,15 @@ public class HibernateUserRepository implements UserRepository {
 		query.setParameter("surname", "%"+surname+"%");
 		query.setParameter("cId", courseId);
 		List<Student> result = query.getResultList();
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public List<User> getAllUsers() {
+		Query query = entityManager.createQuery("select u from User u");
+		List<User> result = query.getResultList();
+		Hibernate.initialize(result);
 		return result;
 	}
 

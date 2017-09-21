@@ -1,7 +1,7 @@
-<!--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<%@ page session="false"%> -->
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,22 +238,36 @@
 			<div class="col-md-2">
 				<nav class="nav-sidebar">
 					<ul class="nav">
-						<li class="active"><a href="javascript:;">Marcin Krawczyk</a></li>
-						<li><a href="javascript:;">Marek Krawczyk</a></li>
-						<li><a href="javascript:;">Joanna Krawczyk</a></li>
-						<li><a href="javascript:;">Weronika Krawczyk</a></li>
+						<c:forEach var="user" items="${users}">
+                       					 
+ 					 
+ 					 	<li <c:if test="${receiver_id==user.id}">class="active"</c:if>>
+ 					 	<a href="<c:url value="/conversation/${thisUserId}/${user.id}"/>">${user.name } ${user.surname }</a></li>
+						</c:forEach>
+						
+						
 					</ul>
 				</nav>
 			</div>
 			<div class="col-md-10" id="response">
 				<!--  here will be the messages -->
-
+                 
 				<div class="messageSender">
 					<textarea id="text" cols="50" rows="5"></textarea>
 					<button id="sendMessage" onclick="sendMessage();">Send</button>
 					<button id="disconnect" disabled="disabled" onclick="disconnect();">
 						Disconnect</button>
 				</div>
+				<c:if test="${not empty messages }">
+			          <c:forEach var= "message" items = "${messages }">
+			          	<c:if test="${message.sender_id==sender_id }">
+			          		<div class="message sent">${message.textContent }</div>
+			          	</c:if>
+			          	<c:if test="${message.sender_id!=sender_id }">
+			          		<div class="message received">${message.textContent }</div>
+			          	</c:if>
+			          </c:forEach>
+			    </c:if>      
 			</div>
 		</div>
 

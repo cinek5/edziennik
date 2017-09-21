@@ -15,6 +15,7 @@ public interface UserRepository {
 	User findById(Long id);
 	void insertUser(User user);
     List<Teacher> getAllTeachers();
+    List<User> getAllUsers();
     List<Student> searchStudentBySurname(String surname);
     List<Student> searchStudentBySurnameAttendingCourse(String surname,Long courseId);
 	

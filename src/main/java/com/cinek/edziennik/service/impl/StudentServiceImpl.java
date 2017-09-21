@@ -64,6 +64,10 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	/** 
+	 * returns set of grades for specified student
+	 * @param username - username of the student
+	 */
 	public Set<Grade> getStudentGradesByUsername(String username) {
 		Student student = (Student) userRepository.findByUsername(username);
 		Set<Grade> grades = student.getGrades();
@@ -72,6 +76,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	/**
+	 * returns set of courses that are avaible for specified student
+	 * to sign in(not full, not already signed by this student)
+	 * @param username - username of the student
+	 */
 	public Set<Course> getCoursesAvaibleToSingIn(String username) {
 		Set<Course> avaibleCourses = courseService.getAllCoursesAvaible();
 		Student student = (Student) userRepository.findByUsername(username);

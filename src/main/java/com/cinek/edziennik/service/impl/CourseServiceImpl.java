@@ -86,6 +86,11 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional
+	/**
+	 * Returns list of courses that given user attends
+	 * @username - Username of the student
+	 * 
+	 */
 	public List<Course> getCoursesStudentAttends(String username) {
 		Student student = (Student) userRepository.findByUsername(username);
 		List<Course> courses = student.getCoursesAttended();
@@ -95,6 +100,13 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional
+	/**
+	 * Returns map containing key-value pair.Keyset is set of courses that teacher teaches.
+	 *  Key is the course and value is the number of students
+	 * attending this course. 
+	 * @param username - username of the teacher
+	 * 
+	 */
 	public Map<Course, Integer> getCoursesTeacherTeachesWithSize(String username) {
 		Teacher teacher = (Teacher) userRepository.findByUsername(username);
 		List<Course> courses = teacher.getCoursesTaught();
@@ -108,6 +120,9 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional
+	/**
+	 * returns set of Courses that are avaible to sign in for student  (these that aren't full yet)
+	 */
 	public Set<Course> getAllCoursesAvaible() {
 		List<Course> allCourses = courseRepository.findAllCourses();
 		Set<Course> avaibleCourses = new HashSet<Course>();
@@ -136,6 +151,10 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional
+	/**
+	 * returns list of students attending specified course
+	 * @param courseId - id of the course
+	 */
 	public List<Student> getStudentsAttendingCourse(Long courseId) {
 		Course course = courseRepository.findById(courseId);
 		List<Student> students = course.getStudents();

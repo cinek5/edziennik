@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	/**
+	 * registers new student, adds specified user roles and stores
+	 * student object into database
+	 * @param student - student model object
+	 */
 	public void registerNewStudent(Student student) {
 		String password = student.getPassword();
 		student.setPassword(passwordEncoder.encode(password));

@@ -34,12 +34,11 @@ public class MessageHandlingController {
 	    return message;
 	}
 	
-	@RequestMapping("/conversation/{sender_id}/{receiver_id}")
-	public String conversationBeetwenUsers(Model model,@PathVariable Long sender_id,@PathVariable Long receiver_id) {
-	  addUsersToModel(model);	
-	  List<Message> messages =	conversationService.getMessagesBetweenUsers(sender_id, receiver_id);
+	@RequestMapping("/conversation/{receiver_id}")
+	public String conversationBeetwenUsers(Model model,@PathVariable Long receiver_id) {
+	  addUsersToModel(model);
+	  List<Message> messages =	conversationService.getMessagesBetweenUsers(getLoggedUserId(), receiver_id);
 	  model.addAttribute("messages", messages);
-	  model.addAttribute("sender_id",sender_id);
 	  model.addAttribute("receiver_id",receiver_id);
 		
 		
@@ -61,6 +60,14 @@ public class MessageHandlingController {
 		
 		model.addAttribute("users",users);
 		model.addAttribute("thisUserId",thisUser.getId());
+	}
+	private Long getLoggedUserId() {
+		List<User> users = userRepository.getAllUsers();
+		org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		User thisUser = userRepository.findByUsername(username);
+		
+		return thisUser.getId();
 	}
 
 }

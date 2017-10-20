@@ -42,5 +42,18 @@ public class Student extends User {
 	public void setGrades(Set<Grade> grades) {
 		this.grades = grades;
 	}
+	public double averageGrade() {
+		double avg = 0 ;
+		double sum = 0;
+		int num= 0;
+		for (Grade g: grades) {
+			if (g.isAccepted()) sum += g.getGrade();
+			num++;
+		}
+		if (num!=0) avg=sum/num;
+		
+		return avg;
+		
+	}
 
 }

@@ -52,18 +52,26 @@ public class studentServiceTest {
 		student.getGrades().add(grade);
 		when(userRepository.findById(new Long(1))).thenReturn(student);
 		when(courseRepository.findById(new Long(2))).thenReturn(course);
+		
+		
 	}
 
 	@Test
 	public void shouldSGradeAccepted() {
 		try {
-			studentService.acceptGrade(new Long(1), new Long(1));
+			studentService.acceptGrade(new Long(1));
 		} catch (NoSuchGradeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertTrue(grade.isAccepted());
 
+	}
+	@Test 
+	public void shouldAverageGrade() {
+		grade.setAccepted(true);
+		assertEquals(5.0,studentService.averageGrade(student.getId()),1e-8);
+		
 	}
 
 }

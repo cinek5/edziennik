@@ -119,7 +119,7 @@
 		var socket = new SockJS('/edziennik/chat');
 		stompClient = Stomp.over(socket);
 		var receiver_id = '${receiver_id}';
-		var sender_id = '${sender_id}' // tutaj id do nasluchu
+		var sender_id = '${thisUserId}' // tutaj id do nasluchu
 		stompClient.connect({}, function(frame) {
 			setConnected(true);
 			console.log('Connected: ' + frame);
@@ -139,7 +139,7 @@
 	}
 
 	function sendMessage() {
-		var sender_id = '${sender_id}';
+		var sender_id = '${thisUserId}';
 		var receiver_id = '${receiver_id}';
 		var textarea = document.getElementById("text");
 		stompClient.send("/app/chat/" + receiver_id + "/" + sender_id, {}, JSON.stringify({
@@ -242,7 +242,7 @@
                        					 
  					 
  					 	<li <c:if test="${receiver_id==user.id}">class="active"</c:if>>
- 					 	<a href="<c:url value="/conversation/${thisUserId}/${user.id}"/>">${user.name } ${user.surname }</a></li>
+ 					 	<a href="<c:url value="/conversation/${user.id}"/>">${user.name } ${user.surname }</a></li>
 						</c:forEach>
 						
 						
@@ -260,10 +260,10 @@
 				</div>
 				<c:if test="${not empty messages }">
 			          <c:forEach var= "message" items = "${messages }">
-			          	<c:if test="${message.sender_id==sender_id }">
+			          	<c:if test="${message.sender_id==thisUserId }">
 			          		<div class="message sent">${message.textContent }</div>
 			          	</c:if>
-			          	<c:if test="${message.sender_id!=sender_id }">
+			          	<c:if test="${message.sender_id!=thisUserId }">
 			          		<div class="message received">${message.textContent }</div>
 			          	</c:if>
 			          </c:forEach>

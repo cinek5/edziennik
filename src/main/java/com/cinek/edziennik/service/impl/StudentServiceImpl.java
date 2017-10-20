@@ -1,7 +1,14 @@
 package com.cinek.edziennik.service.impl;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinek.edziennik.exception.NoSuchGradeException;
+import com.cinek.edziennik.helpers.StudentAvgGradesComparator;
 import com.cinek.edziennik.model.Course;
 import com.cinek.edziennik.model.Grade;
 import com.cinek.edziennik.model.Student;
@@ -52,14 +60,20 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public double showAverageGrade(Long studentId) {
+	public double averageGrade(Long studentId) {
 		double avg = 0;
 		int sum = 0;
+		int numOfAcceptedGrades=0;
 		Student student = (Student) userRepository.findById(studentId);
 		for (Grade g : student.getGrades()) {
+			if (g.isAccepted()) {
 			sum += g.getGrade();
+			numOfAcceptedGrades += 1;
+			}
 		}
-		avg = sum / student.getGrades().size();
+		if (numOfAcceptedGrades>0)
+		avg = sum / numOfAcceptedGrades;
+	
 		return avg;
 	}
 
@@ -99,6 +113,18 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		return grade;
+	}
+
+	@Override
+	public Map<Student,Double> getStudentsMapSortedByGrades() {
+		List<Student> studentsList = userRepository.getAllStudents();
+	    SortedMap<Student,Double> studentsMap = new TreeMap(new StudentAvgGradesComparator());
+		for (Student s: studentsList) {
+			double avg = s.averageGrade();
+			if (avg>0)
+			studentsMap.put(s,avg );
+		}
+		return studentsMap;
 	}
 
 }

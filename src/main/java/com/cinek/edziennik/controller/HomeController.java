@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cinek.edziennik.service.StudentService;
 import com.cinek.edziennik.service.impl.ExampleEntitesCreatorService;
 
 /**
@@ -28,6 +29,8 @@ import com.cinek.edziennik.service.impl.ExampleEntitesCreatorService;
 public class HomeController {
 	@Autowired
 	ExampleEntitesCreatorService entcreator;
+	@Autowired
+	StudentService studentService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -66,5 +69,11 @@ public class HomeController {
 		
 		return "redirect:/";
 	}
-	
+	@RequestMapping(value = "/topStudents", method = RequestMethod.GET)
+	public String topStudents(Model model) {
+		
+		model.addAttribute("studentsMap",studentService.getStudentsMapSortedByGrades());
+		return "topStudents";
+		
+	}
 }

@@ -85,10 +85,18 @@ public class HibernateUserRepository implements UserRepository {
 	@Override
 	@Transactional
 	public List<User> getAllUsers() {
-		Query query = entityManager.createQuery("select u from User u");
+		TypedQuery<User> query = entityManager.createQuery("select u from User u",User.class);
 		List<User> result = query.getResultList();
 		Hibernate.initialize(result);
 		return result;
+	}
+
+	@Override
+	public List<Student> getAllStudents() {
+		TypedQuery<Student> query = entityManager.createQuery("select s from Student s",Student.class);
+		List<Student> result = query.getResultList();
+		return result;
+		
 	}
 
 	

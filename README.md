@@ -7,6 +7,8 @@
 - After grade's been accepted teacher can't change it.
 - Students can sign up for courses and get grades from them, listed in their account
 - Teacher is able to search students attending his course by surname query
+- real time chat beetwen users (websockets)
+- top students site (ranking of students according to their performance in courses)
 
 ## Technologies used:
 - Java

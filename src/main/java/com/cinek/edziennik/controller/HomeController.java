@@ -43,23 +43,7 @@ public class HomeController {
 		
 		return "home";
 	}
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(
-		@RequestParam(value = "error", required = false) boolean error) {
-
-		ModelAndView model = new ModelAndView();
-		if (error) {
-			model.addObject("error", error);
-		}
-
-		//if (logout != null) {
-			//model.addObject("msg", "You've been logged out successfully.");
-		//}
-		model.setViewName("loginPage");
-
-		return model;
-
-	}
+	
 	@RequestMapping(value = "/createEntites", method = RequestMethod.GET)
 	public String check(Locale locale, Model model) {
 		

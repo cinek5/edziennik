@@ -25,7 +25,7 @@
 	  }
 	</style>
 </head>
-
+<script  src="<c:url value="/resources/scripts/logout.js" />"></script>
 <body>
 
 <!-- Top navba-->
@@ -79,7 +79,7 @@
 			<!--right align-->
 			<c:if test="${not empty pageContext.request.userPrincipal}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value= "/login?logout"/>">Logout <span
+					<li><a href="<c:url value ="/>logout" />">Logout <span
 							class="glyphicon glyphicon-remove"></span></a></li>
 				</ul>
 			</c:if>

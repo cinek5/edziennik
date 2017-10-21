@@ -29,7 +29,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
-
 <style>
  body{
 
@@ -96,7 +95,7 @@ background: linear-gradient(to right, #E1F5C4, #EDE574); /* W3C, IE 10+/ Edge, F
 			<!--right align-->
 			<c:if test="${not empty pageContext.request.userPrincipal}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value= "/login?logout"/>">Logout <span
+					<li><a href="<c:url value ="/logout" />">Logout <span
 							class="glyphicon glyphicon-remove"></span></a></li>
 				</ul>
 			</c:if>

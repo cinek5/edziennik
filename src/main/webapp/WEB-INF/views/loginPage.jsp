@@ -32,6 +32,13 @@
 
 					</div>
 				</c:if>
+				<c:if test="${logout}">
+					<div class="row">
+						<div class="alert alert-info" role="alert">You have been
+							succesfully logged out</div>
+
+					</div>
+				</c:if>
 				<div class="row">
 					<div class="form-group">
 						<label for="username">Username:</label> <input type="text"

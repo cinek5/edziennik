@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        .formLogin()
 				.loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/")
 				.usernameParameter("username").passwordParameter("password").and().logout()
-				.logoutSuccessUrl("/login?logout").and().csrf().and().exceptionHandling().accessDeniedPage("/403");
+				.logoutSuccessUrl("/login?logout").and().exceptionHandling().accessDeniedPage("/403");
 		
 		
 	}

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 
@@ -66,7 +65,7 @@
 			<!--right align-->
 			<c:if test="${not empty pageContext.request.userPrincipal}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value= "/login?logout"/>">Logout <span
+					<li><a href="<c:url value ="/logout" />">Logout <span
 							class="glyphicon glyphicon-remove"></span></a></li>
 				</ul>
 			</c:if>

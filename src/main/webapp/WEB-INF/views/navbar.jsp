@@ -34,6 +34,9 @@
 								<li><a href="<c:url value="/conversation" />">Open chat
 									</a>
 								</li>
+								<li><a href="<c:url value="/myProfile" />">My profile
+									</a>
+								</li>
 							</sec:authorize>
 							<sec:authorize access="hasRole('TEACHER')">
 								<li><a href="<c:url value="/teacher/showCourses" />">Show
@@ -42,6 +45,9 @@
 								<li><a href="<c:url value="/conversation" />">Open chat
 									</a>
 								</li>		
+								<li><a href="<c:url value="/myProfile" />">My profile
+									</a>
+								</li>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
 								<li><a href="<c:url value="/admin/addCourse" />">Add

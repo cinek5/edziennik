@@ -2,10 +2,13 @@ package com.cinek.edziennik.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cinek.edziennik.model.ProfilePictureFile;
 import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.model.Teacher;
 import com.cinek.edziennik.model.User;
@@ -14,6 +17,7 @@ import com.cinek.edziennik.repository.UserRepository;
 import com.cinek.edziennik.service.UserService;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
@@ -87,6 +91,13 @@ public class UserServiceImpl implements UserService {
 	public List<Student> searchStudentBySurnameAttendingCourse(String surname, Long courseId) {
 		
 		return userRepository.searchStudentBySurnameAttendingCourse(surname, courseId);
+	}
+
+	@Override
+	public void addProfilePictureToUser(User user, ProfilePictureFile profilPic) {
+	     user.setProfilPic(profilPic);
+	     profilPic.setUser(user);
+		
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -40,6 +41,8 @@ public abstract class User implements Comparable<User> {
 	@Email
 	private String email;
 	private boolean enabled;
+	@OneToOne(cascade = CascadeType.ALL)
+	private ProfilePictureFile profilPic;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="user",cascade = CascadeType.ALL )
 	private Set<UserRole> userRole;
@@ -167,6 +170,14 @@ public abstract class User implements Comparable<User> {
 		return this.surname.compareTo(otherUser.surname)==0? this.name.compareTo(otherUser.name) : this.surname.compareTo(otherUser.surname);
 		
 		
+	}
+
+	public ProfilePictureFile getProfilPic() {
+		return profilPic;
+	}
+
+	public void setProfilPic(ProfilePictureFile profilPic) {
+		this.profilPic = profilPic;
 	}
 	
 	

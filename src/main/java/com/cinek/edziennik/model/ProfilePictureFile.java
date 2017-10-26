@@ -16,7 +16,7 @@ public class ProfilePictureFile {
 	private String fileName;
 	@Lob
 	private byte[] data;
-	@OneToOne(mappedBy="profilPic",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="profilPic")
 	private User user;
 	public Long getId() {
 		return id;

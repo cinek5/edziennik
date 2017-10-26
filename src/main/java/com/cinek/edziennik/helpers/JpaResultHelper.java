@@ -1,4 +1,4 @@
-package com.cinek.edziennik.repository.impl;
+package com.cinek.edziennik.helpers;
 
 import java.util.List;
 

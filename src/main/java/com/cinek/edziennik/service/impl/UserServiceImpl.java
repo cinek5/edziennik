@@ -13,6 +13,7 @@ import com.cinek.edziennik.model.Student;
 import com.cinek.edziennik.model.Teacher;
 import com.cinek.edziennik.model.User;
 import com.cinek.edziennik.model.UserRole;
+import com.cinek.edziennik.repository.FileUploadRepository;
 import com.cinek.edziennik.repository.UserRepository;
 import com.cinek.edziennik.service.UserService;
 
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
-
+	@Autowired
+    FileUploadRepository profilePicRepository;
 	@Override
 	public User findByUsername(String username) {
 
@@ -95,8 +97,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addProfilePictureToUser(User user, ProfilePictureFile profilPic) {
-	     user.setProfilPic(profilPic);
+	    
 	     profilPic.setUser(user);
+	     profilePicRepository.save(profilPic);
+	     user.setProfilPic(profilPic);
+	     userRepository.merge(user);
+	   
+	     
 		
 	}
 

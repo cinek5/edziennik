@@ -18,5 +18,10 @@ EntityManager entityManager;
 		entityManager.persist(profilPictureFile);
 		
 	}
+	@Override
+	public ProfilePictureFile getProfilPictureFileById(Long imageId) {
+		ProfilePictureFile image = entityManager.find(ProfilePictureFile.class, imageId);
+		return image;
+	}
 
 }

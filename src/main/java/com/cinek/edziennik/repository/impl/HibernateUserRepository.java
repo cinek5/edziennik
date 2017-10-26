@@ -39,6 +39,11 @@ public class HibernateUserRepository implements UserRepository {
 		entityManager.persist(user);
 		
 	}
+	@Override
+	@Transactional
+	public void merge(User user) {
+		entityManager.merge(user);
+	}
 
 	@Override
 	@Transactional
@@ -98,6 +103,7 @@ public class HibernateUserRepository implements UserRepository {
 		return result;
 		
 	}
+	
 
 	
 

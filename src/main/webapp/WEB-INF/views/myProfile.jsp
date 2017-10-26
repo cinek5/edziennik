@@ -44,7 +44,9 @@
             <h2 class="data">E mail: ${user.email }</h2>
         
             <div>
-            <img class="img-thumbnail" width=400 src="http://www.skijumping.pl/newsy/zdjecia/powieksz/malysz_wywiad_ibk_2009-01-03_05-09-54.jpg">
+             <c:if test="${user.profilPic!=null }">
+            	<img class="img-thumbnail" width=400 src="<c:url value="/download/${user.profilPic.id}"/>">
+             </c:if>
             </div>
             <c:if test="${myProfile }">
             <button class="btn btn-primary" style="margin: 30px 0;">Edit my profile </button>

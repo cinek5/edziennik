@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.cinek.edziennik.helpers.JpaResultHelper;
 import com.cinek.edziennik.model.Conversation;
 import com.cinek.edziennik.model.Message;
 import com.cinek.edziennik.repository.ConversationRepository;

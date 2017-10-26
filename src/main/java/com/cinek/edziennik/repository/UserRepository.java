@@ -19,6 +19,6 @@ public interface UserRepository {
     List<User> getAllUsers();
     List<Student> searchStudentBySurname(String surname);
     List<Student> searchStudentBySurnameAttendingCourse(String surname,Long courseId);
-	
+	void merge(User user);
 	
 }

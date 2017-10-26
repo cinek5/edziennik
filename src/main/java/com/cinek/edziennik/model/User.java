@@ -41,7 +41,7 @@ public abstract class User implements Comparable<User> {
 	@Email
 	private String email;
 	private boolean enabled;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private ProfilePictureFile profilPic;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="user",cascade = CascadeType.ALL )

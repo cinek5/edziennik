@@ -50,6 +50,7 @@
             </div>
             <c:if test="${myProfile }">
             <button class="btn btn-primary" style="margin: 30px 0;">Edit my profile </button>
+             <a href="<c:url value="/doUpload" />" class="btn btn-primary" style="margin: 30px 0;">Upload profile picture </a>
             </c:if>
           </div>
         </div>

@@ -57,6 +57,7 @@ background: linear-gradient(to right, #E1F5C4, #EDE574); /* W3C, IE 10+/ Edge, F
 				<th>Name</th>
 				<th>Surname</th>
 				<th>Average</th>
+				<th>Profile</th>
 			</thead>
 			<tbody>
 				<c:forEach var="entry" items="${studentsMap}" varStatus="theCount">
@@ -65,6 +66,7 @@ background: linear-gradient(to right, #E1F5C4, #EDE574); /* W3C, IE 10+/ Edge, F
 						<td>${entry.key.surname}</td>
 						<td> <fmt:formatNumber type = "number" 
          maxFractionDigits = "2" value = "${entry.value}"/></td>
+                        <td><a href="<c:url value="/user/${entry.key.id }" />" class="btn btn-primary">Show profile</a></td>
 					</tr>
 					
 

@@ -66,7 +66,7 @@
 			<!--right align-->
 			<c:if test="${not empty pageContext.request.userPrincipal}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value ="/logout" />">Logout <span
+					<li><a href="<c:url value ="/login?logout=true" />">Logout <span
 							class="glyphicon glyphicon-remove"></span></a></li>
 				</ul>
 			</c:if>

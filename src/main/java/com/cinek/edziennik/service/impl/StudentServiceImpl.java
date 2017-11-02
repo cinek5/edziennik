@@ -118,7 +118,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Map<Student,Double> getStudentsMapSortedByGrades() {
 		List<Student> studentsList = userRepository.getAllStudents();
-	    SortedMap<Student,Double> studentsMap = new TreeMap(new StudentAvgGradesComparator());
+	    SortedMap<Student,Double> studentsMap = new TreeMap<Student, Double>(new StudentAvgGradesComparator());
 		for (Student s: studentsList) {
 			double avg = s.averageGrade();
 			if (avg>0)

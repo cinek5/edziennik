@@ -19,12 +19,15 @@ public class Student extends User {
 	private List<Course> coursesAttended;
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	private Set<Grade> grades;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	private List<GradeChangeRequest> gradeChangeRequests;
 
 	public Student() {
 		super();
 		coursesAttended = new ArrayList<Course>();
-		grades  = new HashSet<Grade>();
-		
+		grades = new HashSet<Grade>();
+		gradeChangeRequests = new ArrayList<GradeChangeRequest>();
+
 	}
 
 	public List<Course> getCoursesAttended() {
@@ -42,18 +45,30 @@ public class Student extends User {
 	public void setGrades(Set<Grade> grades) {
 		this.grades = grades;
 	}
+
 	public double averageGrade() {
-		double avg = 0 ;
+		double avg = 0;
 		double sum = 0;
-		int num= 0;
-		for (Grade g: grades) {
-			if (g.isAccepted()) sum += g.getGrade();
-			num++;
+		int num = 0;
+		for (Grade g : grades) {
+			if (g.isAccepted()) {
+				sum += g.getGrade();
+				num++;
+			}
 		}
-		if (num!=0) avg=sum/num;
-		
+		if (num != 0)
+			avg = sum / num;
+
 		return avg;
-		
+
+	}
+
+	public List<GradeChangeRequest> getGradeChangeRequests() {
+		return gradeChangeRequests;
+	}
+
+	public void setGradeChangeRequests(List<GradeChangeRequest> gradeChangeRequests) {
+		this.gradeChangeRequests = gradeChangeRequests;
 	}
 
 }

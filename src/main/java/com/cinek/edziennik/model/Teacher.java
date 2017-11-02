@@ -13,10 +13,13 @@ public class Teacher extends User{
 	
 	@OneToMany(mappedBy="teacher",cascade= CascadeType.ALL)
 	private List<Course> coursesTaught;
+	@OneToMany(mappedBy="teacher",cascade= CascadeType.ALL)
+	private List<GradeChangeRequest> gradeChangeRequests;
 
 	public Teacher() {
 		super();
 		coursesTaught = new ArrayList<Course>();
+		gradeChangeRequests  = new ArrayList<GradeChangeRequest>();
 	}
 
 	public List<Course> getCoursesTaught() {
@@ -26,5 +29,14 @@ public class Teacher extends User{
 	public void setCoursesTaught(List<Course> coursesTaught) {
 		this.coursesTaught = coursesTaught;
 	}
+
+	public List<GradeChangeRequest> getGradeChangeRequests() {
+		return gradeChangeRequests;
+	}
+
+	public void setGradeChangeRequests(List<GradeChangeRequest> gradeChangeRequests) {
+		this.gradeChangeRequests = gradeChangeRequests;
+	}
+	
 	
 }	

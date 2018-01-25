@@ -73,11 +73,7 @@ public class HibernateUserRepository implements UserRepository {
 
 	@Override
 	@Transactional
-	/**
-	 * Return list of students attending specific course whose surname is substring of parameter
-	 * @param courseId - id of course
-	 * @param surname - query surname 
-	 */
+	
 	public List<Student> searchStudentBySurnameAttendingCourse(String surname, Long courseId) {
 		TypedQuery<Student> query = entityManager
 				.createQuery("Select s from Student s join s.coursesAttended course where s.surname like :surname and course.id=:cId", Student.class);

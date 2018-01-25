@@ -21,27 +21,24 @@ public class ConversationServiceImpl implements ConversationService {
 	ConversationRepository conversationRepository;
 
 	@Override
-	public void createMessage(Long sender_id, Long receiver_id, String textContent, Timestamp timestamp) {
-		Message message = new Message();
-		message.setSender_id(sender_id);
-		message.setReceiver_id(receiver_id);
-		message.setTextContent(textContent);
-		message.setViewed(false);
-		message.setDate(timestamp);
-		Conversation conversation = conversationRepository.getUsersConversation(sender_id, receiver_id);
+	public void insertMessageToDatabase(Message message) {
+		
+		
+		Conversation conversation = conversationRepository.getUsersConversation(message.getSender_id(), message.getReceiver_id());
 		if (conversation != null) {
 			conversation.getMessages().add(message);
 			message.setConversation(conversation);
 		} else {
 			conversation = new Conversation();
-			conversation.setUser1_id(sender_id);
-			conversation.setUser2_id(receiver_id);
+			conversation.setUser1_id(message.getSender_id());
+			conversation.setUser2_id(message.getReceiver_id());
 			conversation.getMessages().add(message);
 			message.setConversation(conversation);
 			conversationRepository.insertConversation(conversation);
 		}
 
 	}
+	
 
 	@Override
 	public List<Message> getMessagesBetweenUsers(Long user1_id, Long user2_id) {

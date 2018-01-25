@@ -33,18 +33,18 @@ public class UploadFileController {
 	     
 	    @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
 	    public String handleFileUpload(HttpServletRequest request,
-	            @RequestParam CommonsMultipartFile fileUpload) throws Exception {
+	            @RequestParam CommonsMultipartFile fileToUpload) throws Exception {
 	          
-	        if (fileUpload != null) {
+	        if (fileToUpload != null) {
 	        	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    		String username = user.getUsername();
 	    		com.cinek.edziennik.model.User userModel = userService.findByUsername(username);
 	                  
-	                System.out.println("Saving file: " + fileUpload.getOriginalFilename());
+	                System.out.println("Saving file: " + fileToUpload.getOriginalFilename());
 	                 
 	                ProfilePictureFile uploadFile = new  ProfilePictureFile();
-	                uploadFile.setFileName("profilePic"+userModel.getId()+"."+fileUpload.getOriginalFilename().split("\\.")[1]);
-	                uploadFile.setData(fileUpload.getBytes());
+	                uploadFile.setFileName("profilePic"+userModel.getId()+"."+fileToUpload.getOriginalFilename().split("\\.")[1]);
+	                uploadFile.setData(fileToUpload.getBytes());
 	                
 	                userService.addProfilePictureToUser(userModel, uploadFile);              
 	               

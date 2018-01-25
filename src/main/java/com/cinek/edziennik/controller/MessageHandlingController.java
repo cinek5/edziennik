@@ -28,8 +28,8 @@ public class MessageHandlingController {
 	@SendTo("/topic/messages/{receiverId}/{senderId}")
 	public Message send(Message message) throws Exception {
 		message.setDate(new Timestamp(System.currentTimeMillis()));
-		
-		conversationService.createMessage(message.getSender_id(), message.getReceiver_id(), message.getTextContent(),message.getDate());
+		message.setViewed(false);
+		conversationService.insertMessageToDatabase(message);
 	    
 	    return message;
 	}
@@ -40,6 +40,7 @@ public class MessageHandlingController {
 	  List<Message> messages =	conversationService.getMessagesBetweenUsers(getLoggedUserId(), receiver_id);
 	  model.addAttribute("messages", messages);
 	  model.addAttribute("receiver_id",receiver_id);
+	  
 		
 		
 		return "messages";

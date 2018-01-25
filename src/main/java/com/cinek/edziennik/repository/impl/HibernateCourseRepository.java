@@ -70,13 +70,7 @@ public class HibernateCourseRepository implements CourseRepository {
 	}
 
 	@Override
-	/**
-	 * Return students grade from specified course,
-	 * returns null if student doesn't have a grade yet
-	 * @param studentId - id of student
-	 * @param courseId - id of course
-	 *
-	 */
+	
 	public Grade findStudentsGradeById(Long studentId, Long courseId) {
 		TypedQuery<Grade> query = entityManager
 				.createQuery("Select g from Grade g where g.student.id=:sId and g.course.id=:cId", Grade.class);

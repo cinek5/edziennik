@@ -44,7 +44,7 @@ public class AdminController {
 	public String processForm(@ModelAttribute("course") @Valid Course course, BindingResult result,
 			HttpServletRequest request) throws NoSelectedOptionException {
 		if (result.hasErrors()) {
-			// errors when filling form
+			
 			return "addCourseForm";
 		} else {
 			String id = request.getParameter("selectbox");

@@ -1,3 +1,4 @@
+
 var stompClient = null;
 
 	function setConnected(connected) {
@@ -8,8 +9,8 @@ var stompClient = null;
 	function connect() {
 		var socket = new SockJS('/edziennik/chat');
 		stompClient = Stomp.over(socket);
-		var receiver_id = '${receiver_id}';
-		var sender_id = '${thisUserId}' // tutaj id do nasluchu
+		var receiver_id = r_id;
+		var sender_id = s_id; // tutaj id do nasluchu
 		stompClient.connect({}, function(frame) {
 			setConnected(true);
 			console.log('Connected: ' + frame);
@@ -29,8 +30,8 @@ var stompClient = null;
 	}
 
 	function sendMessage() {
-		var sender_id = '${thisUserId}';
-		var receiver_id = '${receiver_id}';
+		var sender_id = "${thisUserId}";
+		var receiver_id = "${receiver_id}";
 		var textarea = document.getElementById("text");
 		stompClient.send("/app/chat/" + receiver_id + "/" + sender_id, {}, JSON.stringify({
 			'textContent' : textarea.value,

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Messager</title>
+<title>Messenger</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -107,8 +107,7 @@
 	background-color: #657ba0;
 }
 </style>
-<script  src="<c:url value="/resources/scripts/messages.js" />"></script>
-<script  src="<c:url value="/resources/scripts/logout.js" />"></script>
+
 </head>
 <body>
 
@@ -160,4 +159,6 @@
 
 
 </body>
+<script>var r_id = '${receiver_id}'; 	var s_id = '${thisUserId}'; </script>
+<script  src="<c:url value="/resources/scripts/messages.js" />"></script>
 </html>

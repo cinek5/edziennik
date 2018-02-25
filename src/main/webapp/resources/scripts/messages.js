@@ -30,8 +30,8 @@ var stompClient = null;
 	}
 
 	function sendMessage() {
-		var sender_id = "${thisUserId}";
-		var receiver_id = "${receiver_id}";
+		var sender_id = s_id;
+		var receiver_id = r_id;
 		var textarea = document.getElementById("text");
 		stompClient.send("/app/chat/" + receiver_id + "/" + sender_id, {}, JSON.stringify({
 			'textContent' : textarea.value,
